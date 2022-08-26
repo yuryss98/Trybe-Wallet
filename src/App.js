@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import Login from './pages/Login';
 
-function App() {
-  return <div>Hello, TrybeWallet!</div>;
+export default class App extends Component {
+  render() {
+    return (
+      <Switch>
+        <Route exact path="/" component={ Login } />
+      </Switch>
+    );
+  }
 }
-
-// first commit
-
-export default App;
