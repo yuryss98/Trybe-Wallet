@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import actionAddEmail from '../redux/actions';
+import { actionAddEmail } from '../redux/actions';
 
 class Login extends React.Component {
   state = {
@@ -46,7 +46,7 @@ class Login extends React.Component {
   render() {
     const { isDisabled } = this.state;
     return (
-      <form>
+      <form onSubmit={ this.handleSubmit }>
         <label htmlFor="email">
           Email:
           <input
@@ -70,9 +70,8 @@ class Login extends React.Component {
         </label>
 
         <button
-          type="button"
+          type="submit"
           disabled={ isDisabled }
-          onClick={ this.handleSubmit }
         >
           Entrar
 

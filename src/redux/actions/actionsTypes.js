@@ -1,3 +1,5 @@
 export const ADD_EMAIL = 'ADD_EMAIL';
 
-export const xd = 'xd';
+export const REQUEST_SUCESS = 'REQUEST_SUCESS';
+
+export const REQUEST_FAILURE = 'REQUEST_FAILURE';
