@@ -23,45 +23,46 @@ class Table extends Component {
         <tbody>
           {
             expenses.length && expenses.map((expense) => {
-              const { exchangeRates } = expense;
-              const chaveASK = Number(exchangeRates[expense.currency].ask);
-              const arredondarASK = Math.round((chaveASK + Number.EPSILON) * 100) / 100;
+              const {
+                exchangeRates,
+                currency,
+                value,
+                description,
+                id,
+                tag,
+                method,
+              } = expense;
 
-              const valorConvertido = chaveASK * Number(expense.value);
-              const arredon = Math.round((valorConvertido + Number.EPSILON) * 100) / 100;
+              const apiAskKey = Number(exchangeRates[currency].ask);
+              const roundedAskKey = apiAskKey.toFixed(2);
 
-              const test1 = Number(expense.value).toFixed(2);
+              const valueConverted = apiAskKey * Number(value);
+              const roundedConvertedValue = valueConverted.toFixed(2);
+
+              const roundedValue = Number(value).toFixed(2);
 
               return (
-                <tr key={ expense.id }>
+                <tr key={ id }>
                   <td>
-                    {' '}
-                    { expense.description }
-                    {' '}
+                    { description }
                   </td>
                   <td>
-                    {' '}
-                    { expense.tag }
+                    { tag }
                   </td>
                   <td>
-                    {' '}
-                    { expense.method }
+                    { method }
                   </td>
                   <td>
-                    {' '}
-                    { test1 }
+                    { roundedValue }
                   </td>
                   <td>
-                    {' '}
-                    { expense.exchangeRates[expense.currency].name }
+                    { exchangeRates[currency].name }
                   </td>
                   <td>
-                    {' '}
-                    { arredondarASK }
+                    { roundedAskKey }
                   </td>
                   <td>
-                    {' '}
-                    { arredon }
+                    { roundedConvertedValue }
                   </td>
                   <td>Real</td>
                   <td>Editar/Excluir</td>
