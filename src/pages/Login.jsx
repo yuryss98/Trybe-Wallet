@@ -21,10 +21,12 @@ class Login extends React.Component {
 
   inputsIsValidated = () => {
     const { email, password } = this.state;
-    const regexEmail = email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{3})$/i);
-    const minNumber = 6;
-    const passwordLength = password.length >= minNumber;
-    if (regexEmail && passwordLength) {
+
+    const emailIsValid = email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{3})$/i);
+    const minLengthForPassword = 6;
+    const passwordIsValid = password.length >= minLengthForPassword;
+
+    if (emailIsValid && passwordIsValid) {
       this.setState({
         isDisabled: false,
       });
@@ -38,6 +40,7 @@ class Login extends React.Component {
   handleSubmit = () => {
     const { email } = this.state;
     const { dispatch, history } = this.props;
+
     dispatch(actionAddEmail(email));
 
     history.push('/carteira');
@@ -83,7 +86,9 @@ class Login extends React.Component {
 
 Login.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  history: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default connect()(Login);
