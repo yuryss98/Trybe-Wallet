@@ -10,7 +10,7 @@ class Header extends Component {
     return (
       <div>
         <h3 data-testid="email-field">{ user }</h3>
-        <h3 data-testid="total-field">{ roundNumber }</h3>
+        <h3 data-testid="total-field">{ roundNumber > 0 ? roundNumber : '0.00' }</h3>
         <h3 data-testid="header-currency-field">BRL</h3>
       </div>
     );

@@ -4,6 +4,7 @@ import {
   REQUEST_FAILURE,
   ADD_EXPENSES,
   SUM_EXPENSES,
+  REMOVE_EXPENSE,
 } from './actionsTypes';
 
 export const actionAddEmail = (payload) => ({
@@ -28,6 +29,18 @@ export const actionAddExpenses = (expenses) => ({
     ...expenses,
   },
 });
+
+export const actionRemoveExpenses = (expense) => {
+  const objectValues = Object.values(expense.exchangeRates);
+  const currencySelected = objectValues.find((curr) => curr.code === expense.currency);
+  const sumValues = currencySelected.ask * Number(expense.value);
+
+  return {
+    type: REMOVE_EXPENSE,
+    expense,
+    sumValues,
+  };
+};
 
 const requestCurrenciesSucess = (sucess) => ({
   type: REQUEST_SUCESS,

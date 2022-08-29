@@ -3,6 +3,7 @@ import {
   REQUEST_FAILURE,
   ADD_EXPENSES,
   SUM_EXPENSES,
+  REMOVE_EXPENSE,
 } from '../actions/actionsTypes';
 
 const INITIAL_STATE = {
@@ -37,6 +38,13 @@ const wallet = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       sumExpenses: state.sumExpenses + Number(action.sumValues),
+    };
+
+  case REMOVE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter((test) => test !== action.expense),
+      sumExpenses: state.sumExpenses - Number(action.sumValues),
     };
 
   default: return state;

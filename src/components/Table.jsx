@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { actionRemoveExpenses } from '../redux/actions';
 
 class Table extends Component {
+  removeExpense = (expense) => {
+    const { dispatch } = this.props;
+    dispatch(actionRemoveExpenses(expense));
+  };
+
   render() {
     const { expenses } = this.props;
-    console.log(expenses);
     return (
       <table>
         <thead>
@@ -65,7 +70,17 @@ class Table extends Component {
                     { roundedConvertedValue }
                   </td>
                   <td>Real</td>
-                  <td>Editar/Excluir</td>
+                  <td>
+                    <button type="button">Editar</button>
+                    <button
+                      type="button"
+                      data-testid="delete-btn"
+                      onClick={ () => this.removeExpense(expense) }
+                    >
+                      Excluir
+
+                    </button>
+                  </td>
                 </tr>
               );
             })
@@ -82,6 +97,7 @@ const mapStateToProps = (state) => ({
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf().isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps)(Table);
