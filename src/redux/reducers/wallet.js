@@ -16,35 +16,44 @@ const INITIAL_STATE = {
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
+  const {
+    sucess,
+    error,
+    payload,
+    sumValues,
+    expense,
+  } = action;
+
   switch (action.type) {
   case REQUEST_SUCESS:
     return {
       ...state,
-      currencies: action.sucess.filter((key) => key !== 'USDT'),
+      currencies: sucess.filter((key) => key !== 'USDT'),
     };
 
   case REQUEST_FAILURE:
     return {
       ...state,
-      error: action.error,
+      error,
     };
 
   case ADD_EXPENSES:
     return {
       ...state,
-      expenses: [...state.expenses, action.payload],
+      expenses: [...state.expenses, payload],
     };
+
   case SUM_EXPENSES:
     return {
       ...state,
-      sumExpenses: state.sumExpenses + Number(action.sumValues),
+      sumExpenses: state.sumExpenses + Number(sumValues),
     };
 
   case REMOVE_EXPENSE:
     return {
       ...state,
-      expenses: state.expenses.filter((test) => test !== action.expense),
-      sumExpenses: state.sumExpenses - Number(action.sumValues),
+      expenses: state.expenses.filter((test) => test !== expense),
+      sumExpenses: state.sumExpenses - Number(sumValues),
     };
 
   default: return state;

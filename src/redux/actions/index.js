@@ -13,7 +13,9 @@ export const actionAddEmail = (payload) => ({
 });
 
 const actionSumExpenses = (expenses, currency, value) => {
-  const objectValues = Object.values(expenses.exchangeRates);
+  const { exchangeRates } = expenses;
+
+  const objectValues = Object.values(exchangeRates);
   const currencySelected = objectValues.find((curr) => curr.code === currency);
   const sumValues = currencySelected.ask * Number(value);
 
@@ -31,9 +33,11 @@ export const actionAddExpenses = (expenses) => ({
 });
 
 export const actionRemoveExpenses = (expense) => {
-  const objectValues = Object.values(expense.exchangeRates);
-  const currencySelected = objectValues.find((curr) => curr.code === expense.currency);
-  const sumValues = currencySelected.ask * Number(expense.value);
+  const { exchangeRates, currency, value } = expense;
+
+  const objectValues = Object.values(exchangeRates);
+  const currencySelected = objectValues.find((curr) => curr.code === currency);
+  const sumValues = currencySelected.ask * Number(value);
 
   return {
     type: REMOVE_EXPENSE,

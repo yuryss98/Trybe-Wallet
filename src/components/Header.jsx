@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 class Header extends Component {
   render() {
     const { user, value } = this.props;
-    const roundNumber = Math.round((value + Number.EPSILON) * 100) / 100;
+    const roundNumber = value.toFixed(2);
 
     return (
       <div>
