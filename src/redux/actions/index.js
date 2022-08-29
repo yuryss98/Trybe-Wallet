@@ -12,8 +12,8 @@ export const actionAddEmail = (payload) => ({
 });
 
 const actionSumExpenses = (expenses, currency, value) => {
-  const objectValeus = Object.values(expenses.exchangeRates);
-  const currencySelected = objectValeus.find((chave) => chave.code === currency);
+  const objectValues = Object.values(expenses.exchangeRates);
+  const currencySelected = objectValues.find((curr) => curr.code === currency);
   const sumValues = currencySelected.ask * Number(value);
 
   return {
@@ -56,10 +56,13 @@ export const fetchingExchangeRates = (expense, currency, value) => async (dispat
     const url = 'https://economia.awesomeapi.com.br/json/all';
     const response = await fetch(url);
     const data = await response.json();
-    expense.exchangeRates = data;
+    const newExpense = {
+      ...expense,
+      exchangeRates: data,
+    };
 
-    dispatch(actionAddExpenses(expense));
-    dispatch(actionSumExpenses(expense, currency, value));
+    dispatch(actionAddExpenses(newExpense));
+    dispatch(actionSumExpenses(newExpense, currency, value));
   } catch (error) {
     dispatch(actionRequestFailure(error.message));
   }
