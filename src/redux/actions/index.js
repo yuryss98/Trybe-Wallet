@@ -1,29 +1,27 @@
 import {
   ADD_EMAIL,
   REQUEST_SUCESS,
-  REQUEST_FAILURE,
   ADD_EXPENSES,
-  SUM_EXPENSES,
   REMOVE_EXPENSE,
+  REQUEST_FAILURE,
+  EDIT_EXPENSE,
+  EDITED_EXPENSE,
 } from './actionsTypes';
+
+export const actionEditedExpense = (payload) => ({
+  type: EDITED_EXPENSE,
+  payload,
+});
+
+export const actionEditExpense = (id) => ({
+  type: EDIT_EXPENSE,
+  id,
+});
 
 export const actionAddEmail = (payload) => ({
   type: ADD_EMAIL,
   payload,
 });
-
-const actionSumExpenses = (expenses, currency, value) => {
-  const { exchangeRates } = expenses;
-
-  const objectValues = Object.values(exchangeRates);
-  const currencySelected = objectValues.find((curr) => curr.code === currency);
-  const sumValues = currencySelected.ask * Number(value);
-
-  return {
-    type: SUM_EXPENSES,
-    sumValues,
-  };
-};
 
 export const actionAddExpenses = (expenses) => ({
   type: ADD_EXPENSES,
@@ -32,19 +30,10 @@ export const actionAddExpenses = (expenses) => ({
   },
 });
 
-export const actionRemoveExpenses = (expense) => {
-  const { exchangeRates, currency, value } = expense;
-
-  const objectValues = Object.values(exchangeRates);
-  const currencySelected = objectValues.find((curr) => curr.code === currency);
-  const sumValues = currencySelected.ask * Number(value);
-
-  return {
-    type: REMOVE_EXPENSE,
-    expense,
-    sumValues,
-  };
-};
+export const actionRemoveExpenses = (expense) => ({
+  type: REMOVE_EXPENSE,
+  expense,
+});
 
 const requestCurrenciesSucess = (sucess) => ({
   type: REQUEST_SUCESS,
@@ -68,7 +57,7 @@ export const fetchingCurrenciesThunk = () => async (dispatch) => {
   }
 };
 
-export const fetchingExchangeRates = (expense, currency, value) => async (dispatch) => {
+export const fetchingExchangeRates = (expense) => async (dispatch) => {
   try {
     const url = 'https://economia.awesomeapi.com.br/json/all';
     const response = await fetch(url);
@@ -77,9 +66,7 @@ export const fetchingExchangeRates = (expense, currency, value) => async (dispat
       ...expense,
       exchangeRates: data,
     };
-
     dispatch(actionAddExpenses(newExpense));
-    dispatch(actionSumExpenses(newExpense, currency, value));
   } catch (error) {
     dispatch(actionRequestFailure(error.message));
   }

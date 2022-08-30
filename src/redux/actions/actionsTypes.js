@@ -6,6 +6,8 @@ export const REQUEST_FAILURE = 'REQUEST_FAILURE';
 
 export const ADD_EXPENSES = 'ADD_EXPENSES';
 
-export const SUM_EXPENSES = 'SUM_EXPENSES';
-
 export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
+
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+
+export const EDITED_EXPENSE = 'EDITED_EXPENSE';

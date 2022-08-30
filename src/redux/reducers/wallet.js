@@ -1,9 +1,9 @@
 import {
   REQUEST_SUCESS,
-  REQUEST_FAILURE,
   ADD_EXPENSES,
-  SUM_EXPENSES,
   REMOVE_EXPENSE,
+  EDIT_EXPENSE,
+  EDITED_EXPENSE,
 } from '../actions/actionsTypes';
 
 const INITIAL_STATE = {
@@ -11,51 +11,56 @@ const INITIAL_STATE = {
   expenses: [],
   editor: false,
   idToEdit: 0,
-  error: '',
-  sumExpenses: 0,
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
-  const {
-    sucess,
-    error,
-    payload,
-    sumValues,
-    expense,
-  } = action;
-
   switch (action.type) {
   case REQUEST_SUCESS:
     return {
       ...state,
-      currencies: sucess.filter((key) => key !== 'USDT'),
-    };
-
-  case REQUEST_FAILURE:
-    return {
-      ...state,
-      error,
+      currencies: action.sucess.filter((key) => key !== 'USDT'),
     };
 
   case ADD_EXPENSES:
     return {
       ...state,
-      expenses: [...state.expenses, payload],
-    };
-
-  case SUM_EXPENSES:
-    return {
-      ...state,
-      sumExpenses: state.sumExpenses + Number(sumValues),
+      expenses: [...state.expenses, action.payload],
     };
 
   case REMOVE_EXPENSE:
     return {
       ...state,
-      expenses: state.expenses.filter((test) => test !== expense),
-      sumExpenses: state.sumExpenses - Number(sumValues),
+      expenses: state.expenses.filter((test) => test !== action.expense),
+      sumExpenses: state.sumExpenses - Number(action.sumValues),
     };
 
+  case EDIT_EXPENSE:
+    return {
+      ...state,
+      editor: true,
+      idToEdit: action.id,
+      exchangeRates: action.exchangeRates,
+    };
+
+  case EDITED_EXPENSE: {
+    return {
+      ...state,
+      expenses: state.expenses.map((expense) => {
+        if (expense.id === state.idToEdit) {
+          const expenseEdited = {
+            id: state.idToEdit,
+            ...action.payload,
+            exchangeRates: {
+              ...expense.exchangeRates,
+            },
+          };
+          return expenseEdited;
+        }
+        return expense;
+      }),
+      editor: false,
+    };
+  }
   default: return state;
   }
 };

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { actionRemoveExpenses } from '../redux/actions';
+import { actionRemoveExpenses, actionEditExpense } from '../redux/actions';
 
 class Table extends Component {
   removeExpense = (expense) => {
@@ -9,8 +9,14 @@ class Table extends Component {
     dispatch(actionRemoveExpenses(expense));
   };
 
+  editExpense = (id) => {
+    const { dispatch } = this.props;
+    dispatch(actionEditExpense(id));
+  };
+
   render() {
     const { expenses } = this.props;
+
     return (
       <table>
         <thead>
@@ -41,8 +47,8 @@ class Table extends Component {
               const apiAskKey = Number(exchangeRates[currency].ask);
               const roundedAskKey = apiAskKey.toFixed(2);
 
-              const valueConverted = apiAskKey * Number(value);
-              const roundedConvertedValue = valueConverted.toFixed(2);
+              const total = apiAskKey * Number(value);
+              const roundedTotal = total.toFixed(2);
 
               const roundedValue = Number(value).toFixed(2);
 
@@ -67,11 +73,18 @@ class Table extends Component {
                     { roundedAskKey }
                   </td>
                   <td>
-                    { roundedConvertedValue }
+                    { roundedTotal }
                   </td>
                   <td>Real</td>
                   <td>
-                    <button type="button">Editar</button>
+                    <button
+                      type="button"
+                      data-testid="edit-btn"
+                      onClick={ () => this.editExpense(id) }
+                    >
+                      Editar
+
+                    </button>
                     <button
                       type="button"
                       data-testid="delete-btn"
