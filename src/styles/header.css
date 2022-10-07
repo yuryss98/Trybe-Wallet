@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.titleHeader {
+  color: #48c78e;
+  font-size: 30px;
+}
+
+.total {
+  display: flex;
+}
+
+.total {
+  margin-right: 5px;
+}
+
+.fa-user {
+  font-size: 20px;
+  margin-right: 5px;
+  color: #48c78e;
+}
+
+.fa-circle-dollar-to-slot {
+  font-size: 20px;
+  margin-right: 5px;
+  color: #48c78e;
+}

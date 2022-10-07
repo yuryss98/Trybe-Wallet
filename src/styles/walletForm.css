@@ -1,0 +1,20 @@
+.formExpense {
+  margin-top: 50px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 80px;
+  color: black;
+}
+
+.formExpense input {
+  width: 150px;
+}
+
+.control {
+  margin-right: 10px;
+}
+
+.buttons {
+  margin-top: 6px;
+}

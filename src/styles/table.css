@@ -1,0 +1,20 @@
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.table thead td {
+  background-color: #00d1b2;
+}
+
+.is-danger {
+  width: 50px;
+  margin-right: 5px;
+}
+
+.is-link {
+  width: 50px;
+  margin-right: 5px;
+}

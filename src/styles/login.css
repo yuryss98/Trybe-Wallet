@@ -1,0 +1,17 @@
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.titleLogin {
+  font-size: 50px;
+  color: #48c78e;
+}
+
+.fa-solid {
+  margin-left: 10px;
+}

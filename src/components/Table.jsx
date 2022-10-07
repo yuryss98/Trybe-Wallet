@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { actionRemoveExpenses, actionEditExpense } from '../redux/actions';
+import '../styles/table.css';
 
 class Table extends Component {
   removeExpense = (expense) => {
@@ -18,88 +19,93 @@ class Table extends Component {
     const { expenses } = this.props;
 
     return (
-      <table>
-        <thead>
-          <th>Descrição</th>
-          <th>Tag</th>
-          <th>Método de pagamento</th>
-          <th>Valor</th>
-          <th>Moeda</th>
-          <th>Câmbio utilizado</th>
-          <th>Valor convertido</th>
-          <th>Moeda de conversão</th>
-          <th>Editar/Excluir</th>
-        </thead>
+      <div className="table-container">
 
-        <tbody>
-          {
-            expenses.length && expenses.map((expense) => {
-              const {
-                exchangeRates,
-                currency,
-                value,
-                description,
-                id,
-                tag,
-                method,
-              } = expense;
+        <table className="table">
+          <thead>
+            <td>Descrição</td>
+            <td>Tag</td>
+            <td>Método de pagamento</td>
+            <td>Valor</td>
+            <td>Moeda</td>
+            <td>Câmbio utilizado</td>
+            <td>Valor convertido</td>
+            <td>Moeda de conversão</td>
+            <td>Editar/Excluir</td>
+          </thead>
 
-              const apiAskKey = Number(exchangeRates[currency].ask);
-              const roundedAskKey = apiAskKey.toFixed(2);
+          <tbody>
+            {
+              expenses.length && expenses.map((expense) => {
+                const {
+                  exchangeRates,
+                  currency,
+                  value,
+                  description,
+                  id,
+                  tag,
+                  method,
+                } = expense;
 
-              const total = apiAskKey * Number(value);
-              const roundedTotal = total.toFixed(2);
+                const apiAskKey = Number(exchangeRates[currency].ask);
+                const roundedAskKey = apiAskKey.toFixed(2);
 
-              const roundedValue = Number(value).toFixed(2);
+                const total = apiAskKey * Number(value);
+                const roundedTotal = total.toFixed(2);
 
-              return (
-                <tr key={ id }>
-                  <td>
-                    { description }
-                  </td>
-                  <td>
-                    { tag }
-                  </td>
-                  <td>
-                    { method }
-                  </td>
-                  <td>
-                    { roundedValue }
-                  </td>
-                  <td>
-                    { exchangeRates[currency].name }
-                  </td>
-                  <td>
-                    { roundedAskKey }
-                  </td>
-                  <td>
-                    { roundedTotal }
-                  </td>
-                  <td>Real</td>
-                  <td>
-                    <button
-                      type="button"
-                      data-testid="edit-btn"
-                      onClick={ () => this.editExpense(id) }
-                    >
-                      Editar
+                const roundedValue = Number(value).toFixed(2);
 
-                    </button>
-                    <button
-                      type="button"
-                      data-testid="delete-btn"
-                      onClick={ () => this.removeExpense(expense) }
-                    >
-                      Excluir
+                return (
+                  <tr key={ id }>
+                    <td>
+                      { description }
+                    </td>
+                    <td>
+                      { tag }
+                    </td>
+                    <td>
+                      { method }
+                    </td>
+                    <td>
+                      { roundedValue }
+                    </td>
+                    <td>
+                      { exchangeRates[currency].name }
+                    </td>
+                    <td>
+                      { roundedAskKey }
+                    </td>
+                    <td>
+                      { roundedTotal }
+                    </td>
+                    <td>Real</td>
+                    <td>
+                      <button
+                        className="button is-link"
+                        type="button"
+                        data-testid="edit-btn"
+                        onClick={ () => this.editExpense(id) }
+                      >
+                        Editar
 
-                    </button>
-                  </td>
-                </tr>
-              );
-            })
-          }
-        </tbody>
-      </table>
+                      </button>
+                      <button
+                        className="button is-danger"
+                        type="button"
+                        data-testid="delete-btn"
+                        onClick={ () => this.removeExpense(expense) }
+                      >
+                        Excluir
+
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })
+            }
+          </tbody>
+        </table>
+      </div>
     );
   }
 }
